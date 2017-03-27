@@ -1,12 +1,7 @@
 import datetime
-import urllib2
 import tweepy
-from BeautifulSoup import BeautifulSoup
 from connector import Connector
-from lxml.html import parse
-import requests
 
-tweets = []
 base_address = 'https://twitter.com/{}/status/{}'
 
 
@@ -16,6 +11,7 @@ class BasicMeasures:
         self.api = my_connector.api
 
     def get_tweets(self, name):
+        tweets = []
         for tweet in tweepy.Cursor(self.api.user_timeline, screen_name=name, exclude_replies=False,
                                    include_rts=True).items():
             if self.one_year_ago_tweet(tweet):
@@ -30,7 +26,7 @@ class BasicMeasures:
             return True
         return False
 
-    def count_by_measure(self, measure):
+    def count_by_measure(self, measure, tweets):
         response = []
         retweets = False
         replies = False
@@ -73,21 +69,8 @@ class BasicMeasures:
 
         return response
 
-    def general_activity(self):
-        # General Activity = OT1+RP1+RT1+FT1
-        # OT1 = Original Tweets
-        OT1 = self.count_by_measure('original_tweets')
-        # RP1 = Number of replies posted by user
-        RP1 = self.count_by_measure('replies')
-        # RT1 = Number of retweets accomplished by the user
-        RT1 = self.count_by_measure('retweets')
-        # FT1 = Number of tweets of other users marked as favorite (liked) by the user
-        FT1 = self.count_by_measure('Likes')
-
-        return OT1 + RP1 + RT1 + FT1
-
-    def get_original_tweets(self):
-        return self.count_by_measure('original_tweets')
+    def get_original_tweets(self, tweets):
+        return self.count_by_measure('original_tweets', tweets)
 
     def get_ot1(self, list_of_original_tweets):
         # OT1 = Original Tweets
@@ -107,19 +90,19 @@ class BasicMeasures:
             count += tweet.entities['hashtags'].__len__()
         return count
 
-    def get_replies_tweets(self):
-        return self.count_by_measure('replies')
+    def get_replies_tweets(self, tweets):
+        return self.count_by_measure('replies', tweets)
 
     def get_rp1(self, list_of_replies_tweets):
         # RP1 = Number of replies posted by the author
         return list_of_replies_tweets.__len__()
 
-    def get_retweets(self):
-        return self.count_by_measure('retweets')
+    def get_retweets(self, tweets):
+        return self.count_by_measure('retweets', tweets)
 
-    def get_rt1(self):
+    def get_rt1(self, tweets):
         # RT1 = Number of retweets accomplished by the author
-        return self.count_by_measure('retweets').__len__()
+        return self.count_by_measure('retweets', tweets).__len__()
 
     def get_rt2(self, list_of_original_tweets):
         # RT2 = Number of original tweets posted by the author and retweeted by other users
@@ -138,7 +121,6 @@ class BasicMeasures:
 
     def get_ft1(self, screen_name):
         # FT1 = Number of tweets of other users marked as favourites (liked) by the author
-        user = self.api.get_user(screen_name)
         page_number = 1
         first_pagination = True
         result = None
@@ -171,51 +153,6 @@ class BasicMeasures:
                 count += 1
         return count
 
-    ####################Both methods are not completed
-    # returns list(retweet users),list(favorite users) for a given screen_name and status_id
-    def get_ft31(self):
-        # url ='https://twitter.com/JohnAlexanderMP/status/776252037566652416'
-        # r = requests.get(url)
-        # soup = BeautifulSoup(r.text)
-        # Find the nunber of replies
-        # str(soup.find("span", {"class": "ProfileTweet-actionCountForPresentation"}).text)
-        # ul = soup.find("ul", {"class": "stats"})
-        screen_name = 'JohnAlexanderMP'
-        status_id = '776252037566652416'
-        url = urllib2.urlopen('https://twitter.com/' + screen_name + '/status/' + status_id)
-        root = parse(url).getroot()
-
-        num_rts = 0
-        num_favs = 0
-        rt_users = []
-        fav_users = []
-        mashu = root.find_class('activity-popup-dialog-users clearfix')[0]
-        for ul in root.find_class('activity-popup-dialog-users clearfix'):
-            for li in ul.cssselect('li'):
-                cls_name = li.attrib['class']
-                if cls_name.find('retweet') >= 0:
-                    num_rts = int(li.cssselect('a')[0].attrib['data-tweet-stat-count'])
-                elif cls_name.find('favorit') >= 0:
-                    num_favs = int(li.cssselect('a')[0].attrib['data-tweet-stat-count'])
-                elif cls_name.find('avatar') >= 0 or cls_name.find('face-pile') >= 0:  # else face-plant
-                    for users in li.cssselect('a'):
-                        # apparently, favs are listed before retweets, but the retweet summary's listed before the fav summary
-                        # if in doubt you can take the difference of returned uids here with retweet uids from the official api
-                        if num_favs > 0:  # num_rt > 0:
-                            # num_rts -= 1
-                            num_favs -= 1
-                            # rt_users.append(users.attrib['data-user-id'])
-                            fav_users.append(users.attrib['data-user-id'])
-                        else:
-                            # fav_users.append(users.attrib['data-user-id'])
-                            rt_users.append(users.attrib['data-user-id'])
-            return rt_users, fav_users
-
-    def get_ft32(self):
-        url = 'https://twitter.com/i/activity/favorited_popup?id=776252037566652416'
-        r = requests.get(url)
-        ron = 2
-
     def get_m1(self, list_of_original_tweets):
         """
         This measure checks Number of mentions to other users by the author
@@ -242,16 +179,40 @@ class BasicMeasures:
                         mentiond_users_dict[mentioned[u'id']] = 1
         return mentiond_users_dict.values().__len__()
 
-    def get_f1(self, screen_name):
+    def get_f1(self, user):
         """
         This measure checks Number of followers of the user.
         """
-        user = self.api.get_user(screen_name)
         return user.followers_count
 
-    def get_f3(self, screen_name):
+    def get_f3(self, user):
         """
         This measure checks Number of followees of the user.
         """
-        user = self.api.get_user(screen_name)
         return user.friends_count
+
+    def get_all_basic_measures(self, user):
+        basic_measures_dict = {}
+        name = user.name
+        tweets = self.get_tweets(name)
+        original_tweets = self.get_original_tweets(tweets)
+        basic_measures_dict['original_tweets'] = original_tweets.__len__()
+        basic_measures_dict['ot1'] = self.get_ot1(original_tweets)
+        basic_measures_dict['ot2'] = self.get_ot2(original_tweets)
+        basic_measures_dict['ot3'] = self.get_ot3(original_tweets)
+        replies_tweets = self.get_replies_tweets(tweets)
+        basic_measures_dict['replies_tweets'] = replies_tweets.__len__()
+        basic_measures_dict['retweets'] = self.get_retweets(tweets).__len__()
+        basic_measures_dict['rp1'] = self.get_rp1(replies_tweets)
+        basic_measures_dict['rt1'] = self.get_rt1(tweets)
+        basic_measures_dict['rt2'] = self.get_rt2(original_tweets)
+        basic_measures_dict['rt3'] = self.get_rt3(original_tweets)
+        #Need to fix ft1
+        # basic_measures_dict['ft1'] = self.get_ft1(user.screen_name)
+        basic_measures_dict['ft2'] = self.get_ft2(original_tweets)
+        basic_measures_dict['m1'] = self.get_m1(original_tweets)
+        basic_measures_dict['m2'] = self.get_m2(original_tweets)
+        #Very big in compare to others
+        # basic_measures_dict['f1'] = self.get_f1(user)
+        basic_measures_dict['f3'] = self.get_f3(user)
+        return basic_measures_dict
