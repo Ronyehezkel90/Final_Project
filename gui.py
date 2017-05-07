@@ -1,7 +1,6 @@
-from tkinter import *
+from Tkinter import *
 from basic_measures import BasicMeasures
 import tkMessageBox
-from tkinter import ttk
 import numpy as np
 import matplotlib.pyplot as plt
 
