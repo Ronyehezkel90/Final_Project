@@ -3,18 +3,41 @@ from basic_measures import BasicMeasures
 import tkMessageBox
 import numpy as np
 import matplotlib.pyplot as plt
+from connector import Connector
 
 
 class GUI:
     def __init__(self):
+        self.connector = None
+        self.basic_measures = None
         self.root = Tk()
-        self.basic_measures = BasicMeasures()
+        self.root.geometry('{}x{}'.format(500, 500))
+        self.root.resizable(width=False, height=False)
         self.users = []
+        self.login_gui()
+
+    def login_gui(self):
+        self.connector = Connector()
+        user_login_button = Button(self.root, text="Login as user", fg="white", bg="black", bd=5,
+                                   command=lambda: self.login_controller(True))
+        app_login_button = Button(self.root, text="Login as applicaton", fg="white", bg="black", bd=5,
+                                  command=lambda: self.login_controller(False))
+        user_login_button.grid(row=1, column=1, sticky=S)
+        user_login_button.place(relx=0.3, rely=0.5, anchor=CENTER)
+        app_login_button.grid(row=1, column=1, sticky=S)
+        app_login_button.place(relx=0.7, rely=0.5, anchor=CENTER)
+        self.root.title("Twitter")
+        self.root.mainloop()
+
+    def login_controller(self, user_login):
+        if user_login:
+            self.connector.user_authorization()
+        else:
+            self.connector.application_authorization()
+        self.basic_measures = BasicMeasures(self.connector)
+        self.create_gui()
 
     def create_gui(self):
-        # dot_1 = Label(self.root, text=".", fg="gray")
-        # dot_1.grid(row=7, sticky=W)
-
         user = Label(self.root, text="Members:", font="-weight bold")
 
         user.grid(row=0, sticky=W)
@@ -62,13 +85,13 @@ class GUI:
 
     def basic_measures_plot(self, dict_of_users_dicts):
         x = 0
-        my_xticks =''
-        max_value=0
+        my_xticks = ''
+        max_value = 0
         for user_dict in dict_of_users_dicts.values():
-            x= np.arange(user_dict.__len__())
+            x = np.arange(user_dict.__len__())
             plt.plot(x, user_dict.values())
-            my_xticks=user_dict.keys()
-            if max(user_dict.values())>max_value:
+            my_xticks = user_dict.keys()
+            if max(user_dict.values()) > max_value:
                 max_value = max(user_dict.values())
         plt.xticks(x, my_xticks)
         # y= np.arange(max_value+1)
@@ -79,8 +102,6 @@ class GUI:
         for user in self.users:
             dict_of_users_dicts[user.name] = self.basic_measures.get_all_basic_measures(user)
         self.basic_measures_plot(dict_of_users_dicts)
-
-
 
     def add_user_on_click(self):
         screen_name = self.entry_user.get()

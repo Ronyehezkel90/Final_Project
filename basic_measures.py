@@ -1,14 +1,19 @@
 import datetime
 import tweepy
-from connector import Connector
 
 base_address = 'https://twitter.com/{}/status/{}'
 
 
 class BasicMeasures:
-    def __init__(self):
-        my_connector = Connector()
-        self.api = my_connector.api
+    def __init__(self, connector):
+        self.api = connector.api
+
+    def get_all_followers(self):
+        # NOT WORKING
+        followers = []
+        for follower in tweepy.Cursor(self.api.followers, screen_name='zehavagalon').items():
+            followers.append(follower)
+        return followers
 
     def get_tweets(self, name):
         tweets = []
@@ -207,12 +212,12 @@ class BasicMeasures:
         basic_measures_dict['rt1'] = self.get_rt1(tweets)
         basic_measures_dict['rt2'] = self.get_rt2(original_tweets)
         basic_measures_dict['rt3'] = self.get_rt3(original_tweets)
-        #Need to fix ft1
+        # Need to fix ft1
         # basic_measures_dict['ft1'] = self.get_ft1(user.screen_name)
         basic_measures_dict['ft2'] = self.get_ft2(original_tweets)
         basic_measures_dict['m1'] = self.get_m1(original_tweets)
         basic_measures_dict['m2'] = self.get_m2(original_tweets)
-        #Very big in compare to others
+        # Very big in compare to others
         # basic_measures_dict['f1'] = self.get_f1(user)
         basic_measures_dict['f3'] = self.get_f3(user)
         return basic_measures_dict
