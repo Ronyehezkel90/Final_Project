@@ -3,7 +3,7 @@ import unittest
 from activity_measures import ActivityMeasures
 import numpy as np
 import matplotlib.pyplot as plt
-
+from connector import Connector
 
 class MyTestCase(unittest.TestCase):
 
@@ -54,7 +54,10 @@ class MyTestCase(unittest.TestCase):
         plt.show()
 
     def test_get_followers(self):
-        basic_measures = BasicMeasures()
+        connector = Connector()
+        connector.application_authorization()
+        basic_measures = BasicMeasures(connector)
+
         followers = basic_measures.get_all_followers()
         ron=2
 

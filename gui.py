@@ -1,10 +1,15 @@
 from Tkinter import *
+
+from openpyxl import load_workbook
+
 from basic_measures import BasicMeasures
 import tkMessageBox
 import numpy as np
 import matplotlib.pyplot as plt
 from connector import Connector
 import webbrowser
+import time
+import pandas as pd
 
 
 class GUI:
@@ -14,7 +19,7 @@ class GUI:
         self.authorization_type = None
         self.root = Tk()
         self.root.geometry('{}x{}'.format(500, 500))
-        self.root.resizable(width=False, height=False)
+        # self.root.resizable(width=False, height=False)
         self.users = []
         self.login_gui()
 
@@ -71,7 +76,6 @@ class GUI:
 
     def create_gui(self):
         user = Label(self.root, text="Members:", font="-weight bold")
-
         user.grid(row=0, sticky=W)
         self.listbox = Listbox(self.root, width=18, height=10)
         self.listbox.grid(row=1, rowspan=6)
@@ -92,9 +96,7 @@ class GUI:
         but_5.grid(row=6, column=1, sticky=S)
         but_6.grid(row=7, column=0, sticky=S)
         but_7.grid(row=7, column=1, sticky=S)
-
         self.root.title("Twitter")
-
         self.root.mainloop()
 
     def add_user_frame_on_click(self):
@@ -130,11 +132,20 @@ class GUI:
         plt.show()
 
     def basic_measure_frame_on_click(self):
+        EXCEL_FILE = 'results.xlsx'
+        writer = pd.ExcelWriter(EXCEL_FILE, engine='openpyxl')
+        pd.DataFrame().to_excel(writer)
+        writer.save()
         dict_of_users_dicts = {}
         for user in self.users:
-            dict_of_users_dicts[user.name] = self.basic_measures.get_all_basic_measures(user)
-
-        # self.basic_measures_plot(dict_of_users_dicts)
+            try:
+                dict_of_users_dicts[user.name] = self.basic_measures.get_all_basic_measures(user)
+                wb = load_workbook(EXCEL_FILE, read_only=True)
+                pd.DataFrame().to_excel(writer, startcol=wb.worksheets[0].max_column, index=False)
+                writer.save()
+            except:
+                time.sleep(16 * 60)
+                # self.basic_measures_plot(dict_of_users_dicts)
 
     def add_user_on_click(self):
         screen_name = self.entry_user.get()

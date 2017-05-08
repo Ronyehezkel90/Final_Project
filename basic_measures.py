@@ -11,8 +11,8 @@ class BasicMeasures:
     def get_all_followers(self):
         # NOT WORKING
         followers = []
-        for follower in tweepy.Cursor(self.api.followers, screen_name='zehavagalon').items():
-            followers.append(follower)
+        for followers_page in tweepy.Cursor(self.api.followers, screen_name='zehavagalon').pages():
+            followers.extend(followers_page)
         return followers
 
     def get_tweets(self, name):
