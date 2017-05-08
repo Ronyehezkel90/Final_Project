@@ -17,8 +17,6 @@ class Connector:
         self.auth.set_access_token(access_token, access_secret)
         self.api = tweepy.API(self.auth)
 
-    def user_authorization(self):
-        redirct_url = self.auth.get_authorization_url()
-        verifier = raw_input('Verifier:5281201')
+    def user_authorization(self, verifier):
         self.auth.get_access_token(verifier)
         self.api = tweepy.API(self.auth)

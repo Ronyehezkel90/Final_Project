@@ -4,12 +4,14 @@ import tkMessageBox
 import numpy as np
 import matplotlib.pyplot as plt
 from connector import Connector
+import webbrowser
 
 
 class GUI:
     def __init__(self):
         self.connector = None
         self.basic_measures = None
+        self.authorization_type = None
         self.root = Tk()
         self.root.geometry('{}x{}'.format(500, 500))
         self.root.resizable(width=False, height=False)
@@ -19,9 +21,9 @@ class GUI:
     def login_gui(self):
         self.connector = Connector()
         user_login_button = Button(self.root, text="Login as user", fg="white", bg="black", bd=5,
-                                   command=lambda: self.login_controller(True))
+                                   command=lambda: self.login_controller('user'))
         app_login_button = Button(self.root, text="Login as applicaton", fg="white", bg="black", bd=5,
-                                  command=lambda: self.login_controller(False))
+                                  command=lambda: self.login_controller('app'))
         user_login_button.grid(row=1, column=1, sticky=S)
         user_login_button.place(relx=0.3, rely=0.5, anchor=CENTER)
         app_login_button.grid(row=1, column=1, sticky=S)
@@ -29,12 +31,42 @@ class GUI:
         self.root.title("Twitter")
         self.root.mainloop()
 
-    def login_controller(self, user_login):
-        if user_login:
-            self.connector.user_authorization()
-        else:
-            self.connector.application_authorization()
+    def clear_root_frame(self):
+        for ele in self.root.winfo_children():
+            ele.destroy()
+
+    def user_authorization_button(self, verifier_code):
+        self.connector.user_authorization(verifier_code)
         self.basic_measures = BasicMeasures(self.connector)
+        self.clear_root_frame()
+        self.create_gui()
+
+    def create_user_login_gui(self):
+        self.clear_root_frame()
+        Label(text='Please go to this address and authorize yourself\n').pack(side=TOP, padx=10, pady=10)
+        link = Label(text='Authorization Link', fg="blue", cursor="hand2")
+        link.pack()
+
+        def callback(event):
+            webbrowser.open_new(self.connector.auth.get_authorization_url())
+
+        link.bind("<Button-1>", callback)
+        Label(text='Write here your code').pack(side=TOP, padx=10, pady=10)
+        '+self.connector.auth.get_authorization_url()+'
+        entry = Entry(self.root, width=10)
+        entry.pack(side=TOP, padx=10, pady=10)
+
+        user_login_button = Button(self.root, text="Authorize", fg="white", bg="black", bd=5,
+                                   command=lambda: self.user_authorization_button(entry.get()))
+        user_login_button.pack(side=TOP, padx=10, pady=10)
+        user_login_button.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.root.mainloop()
+
+    def login_controller(self, authorization_type):
+        self.authorization_type = authorization_type
+        self.create_user_login_gui() if self.authorization_type == 'user' else self.connector.application_authorization()
+        self.basic_measures = BasicMeasures(self.connector)
+        self.clear_root_frame()
         self.create_gui()
 
     def create_gui(self):
@@ -101,7 +133,8 @@ class GUI:
         dict_of_users_dicts = {}
         for user in self.users:
             dict_of_users_dicts[user.name] = self.basic_measures.get_all_basic_measures(user)
-        self.basic_measures_plot(dict_of_users_dicts)
+
+        # self.basic_measures_plot(dict_of_users_dicts)
 
     def add_user_on_click(self):
         screen_name = self.entry_user.get()
