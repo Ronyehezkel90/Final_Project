@@ -1,7 +1,4 @@
 from Tkinter import *
-
-from openpyxl import load_workbook
-
 from basic_measures import BasicMeasures
 import tkMessageBox
 import numpy as np
@@ -10,6 +7,9 @@ from connector import Connector
 import webbrowser
 import time
 import pandas as pd
+from tkFileDialog import askopenfilename
+from utils import write_user_data_to_file, iniatilize_results_file
+from conf import BASIC_MEASURES
 
 
 class GUI:
@@ -18,6 +18,7 @@ class GUI:
         self.basic_measures = None
         self.authorization_type = None
         self.root = Tk()
+        self.root.wm_attributes("-topmost", 1)
         self.root.geometry('{}x{}'.format(500, 500))
         # self.root.resizable(width=False, height=False)
         self.users = []
@@ -44,7 +45,7 @@ class GUI:
         self.connector.user_authorization(verifier_code)
         self.basic_measures = BasicMeasures(self.connector)
         self.clear_root_frame()
-        self.create_gui()
+        self.create_gui_main_menu()
 
     def create_user_login_gui(self):
         self.clear_root_frame()
@@ -85,22 +86,23 @@ class GUI:
         but_2 = Button(self.root, text="Activity Measures", fg="white", bg="black", bd=5)
         but_3 = Button(self.root, text="Popularity Measures", fg="white", bg="black", bd=5)
         but_4 = Button(self.root, text="Influence Measures", fg="white", bg="black", bd=5)
-        but_5 = Button(self.root, text="Search shortcut \nMeasures", fg="black", bd=5)
         but_6 = Button(self.root, text="Add user", fg="black", bg="gray", bd=5, command=self.add_user_frame_on_click)
         but_7 = Button(self.root, text="Remove user", fg="black", bg="gray", bd=5)
+        but_8 = Button(self.root, text="Choose File", fg="black", bg="gray", bd=5, command=self.add_users_from_file)
 
         but_1.grid(row=1, column=1, sticky=S)
         but_2.grid(row=2, column=1, sticky=S)
         but_3.grid(row=3, column=1, sticky=S)
         but_4.grid(row=4, column=1, sticky=S)
-        but_5.grid(row=6, column=1, sticky=S)
         but_6.grid(row=7, column=0, sticky=S)
         but_7.grid(row=7, column=1, sticky=S)
+        but_8.grid(row=8, column=1, sticky=S)
         self.root.title("Twitter")
         self.root.mainloop()
 
     def add_user_frame_on_click(self):
         add_user_root = Tk()
+        add_user_root.wm_attributes("-topmost", 1)
         user = Label(add_user_root, text="Insert screen name:", font="-weight bold")
         self.entry_user = Entry(add_user_root)
 
@@ -132,20 +134,31 @@ class GUI:
         plt.show()
 
     def basic_measure_frame_on_click(self):
-        EXCEL_FILE = 'results.xlsx'
-        writer = pd.ExcelWriter(EXCEL_FILE, engine='openpyxl')
-        pd.DataFrame().to_excel(writer)
-        writer.save()
+        writer = iniatilize_results_file(BASIC_MEASURES)
         dict_of_users_dicts = {}
+        count_users = 1
         for user in self.users:
             try:
                 dict_of_users_dicts[user.name] = self.basic_measures.get_all_basic_measures(user)
-                wb = load_workbook(EXCEL_FILE, read_only=True)
-                pd.DataFrame().to_excel(writer, startcol=wb.worksheets[0].max_column, index=False)
-                writer.save()
-            except:
+                write_user_data_to_file(count_users, writer, user, dict_of_users_dicts[user.name].values())
+                count_users += 1
+            except Exception as e:
                 time.sleep(16 * 60)
                 # self.basic_measures_plot(dict_of_users_dicts)
+
+    def add_users_from_file(self):
+        Tk().withdraw()
+        file_name = askopenfilename()
+        with open(file_name) as f:
+            users_from_file = f.readlines()
+        users_from_file = [x.strip() for x in users_from_file]
+        user_count = 1
+        for user in users_from_file:
+            user = self.basic_measures.api.get_user('@' + user)
+            self.users.append(user)
+            self.listbox.insert(0, user.name)
+            print str(user_count) + '. ' + user.name
+            user_count += 1
 
     def add_user_on_click(self):
         screen_name = self.entry_user.get()
