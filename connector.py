@@ -1,7 +1,6 @@
 import tweepy
 from tweepy import OAuthHandler
 
-
 class Connector:
     def __init__(self):
         consumer_key = 'P819tguRDdVJf8nXP36CquWMm'

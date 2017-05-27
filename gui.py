@@ -137,14 +137,26 @@ class GUI:
         writer = iniatilize_results_file(BASIC_MEASURES)
         dict_of_users_dicts = {}
         count_users = 1
+        results_df = pd.DataFrame()
         for user in self.users:
             try:
-                dict_of_users_dicts[user.name] = self.basic_measures.get_all_basic_measures(user)
-                write_user_data_to_file(count_users, writer, user, dict_of_users_dicts[user.name].values())
+                screen_name = user[0]['screen_name']
+                dict_of_users_dicts[screen_name] = self.basic_measures.get_all_basic_measures(user)
+                df = pd.DataFrame([dict_of_users_dicts[screen_name]])
+                df['USER'] = screen_name
+                results_df = results_df.append(df)
+                results_df.to_excel('a.xlsx', index=False)
+                # write_user_data_to_file(count_users, writer, user, dict_of_users_dicts[user.name].values())
                 count_users += 1
+                print str(count_users)+'. '+screen_name
             except Exception as e:
-                time.sleep(16 * 60)
-                # self.basic_measures_plot(dict_of_users_dicts)
+                print 'Limit Reached\nUser: ' + screen_name + '\nUser Number:' + str(count_users)
+                i = 0
+                while i <= 16:
+                    time.sleep(60)
+                    i += 1
+                    print str(i) + ' min passed'
+                    # self.basic_measures_plot(dict_of_users_dicts)
 
     def add_users_from_file(self):
         Tk().withdraw()
@@ -153,12 +165,22 @@ class GUI:
             users_from_file = f.readlines()
         users_from_file = [x.strip() for x in users_from_file]
         user_count = 1
-        for user in users_from_file:
-            user = self.basic_measures.api.get_user('@' + user)
-            self.users.append(user)
-            self.listbox.insert(0, user.name)
-            print str(user_count) + '. ' + user.name
-            user_count += 1
+        failed_users = []
+        authrized_users = self.basic_measures.check_all_users(users_from_file)
+
+        for user_name in users_from_file:
+            if user_name in authrized_users['screen_name'].tolist():
+                user = authrized_users[authrized_users['screen_name']==user_name]
+                self.users.append(user.to_dict(orient='records'))
+                self.listbox.insert(0, user.to_dict(orient='records')[0]['screen_name'])
+                print str(user_count) + '. ' + user.screen_name
+                user_count += 1
+            else:
+                failed_users.append(user_name)
+        if failed_users:
+            tkMessageBox.showinfo("Add user", "Failed users:\n" + str(failed_users))
+        else:
+            tkMessageBox.showinfo("Add user", "All users added successfully")
 
     def add_user_on_click(self):
         screen_name = self.entry_user.get()

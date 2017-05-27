@@ -1,4 +1,6 @@
 import datetime
+import pandas as pd
+import requests
 import tweepy
 
 base_address = 'https://twitter.com/{}/status/{}'
@@ -7,6 +9,7 @@ base_address = 'https://twitter.com/{}/status/{}'
 class BasicMeasures:
     def __init__(self, connector):
         self.api = connector.api
+        self.auth = connector.auth
 
     def get_all_followers(self):
         # NOT WORKING
@@ -194,12 +197,12 @@ class BasicMeasures:
         """
         This measure checks Number of followees of the user.
         """
-        return user.friends_count
+        return user[0]['friends_count']
 
     def get_all_basic_measures(self, user):
         basic_measures_dict = {}
-        name = user.name
-        tweets = self.get_tweets(name)
+        screen_name = user[0]['screen_name']
+        tweets = self.get_tweets(screen_name)
         original_tweets = self.get_original_tweets(tweets)
         basic_measures_dict['original_tweets'] = original_tweets.__len__()
         basic_measures_dict['ot1'] = self.get_ot1(original_tweets)
@@ -221,3 +224,14 @@ class BasicMeasures:
         # basic_measures_dict['f1'] = self.get_f1(user)
         basic_measures_dict['f3'] = self.get_f3(user)
         return basic_measures_dict
+
+    def check_all_users(self, users):
+        authrized_users=[]
+        i = 0
+        while i <= len(users)/90:
+            users_as_string = ",".join(users[i*90:(i+1)*90])
+            response = requests.get(url="https://api.twitter.com/1.1/users/lookup.json?screen_name="+users_as_string, auth=self.auth.apply_auth())
+            authrized_users+=response.json()
+            i+=1
+        df = pd.DataFrame(authrized_users)
+        return df
