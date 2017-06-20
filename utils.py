@@ -1,3 +1,5 @@
+from time import strftime, gmtime
+
 from openpyxl import load_workbook
 import pandas as pd
 from conf import EXCEL_FILE
@@ -5,7 +7,7 @@ from conf import EXCEL_FILE
 
 def iniatilize_results_file(measures):
     writer = pd.ExcelWriter(EXCEL_FILE, engine='openpyxl')
-    columns = ['SCREEN_NAME']+measures
+    columns = ['SCREEN_NAME'] + measures
     initialization_list = ['0'] * columns.__len__()
     pd.DataFrame([initialization_list]).to_excel(writer, header=columns, index=False)
     writer.save()
@@ -32,3 +34,7 @@ def write_to_excel(self):
             pd.DataFrame([['d', 'e', 'f']]).to_excel(writer, startrow=i + 1, index=False, header=False)
         writer.save()
         i += 1
+
+
+def get_current_time():
+    return str(strftime("%H:%M:%S", gmtime()))

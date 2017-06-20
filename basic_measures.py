@@ -127,7 +127,10 @@ class BasicMeasures:
                 retweeters[retweet.author.name] = 1
         return retweeters.__len__()
 
-    def get_ft1(self, screen_name):
+    def get_ft1(self, user):
+        return user['favourites_count']
+
+    def get_ft1_without_own_likes(self, screen_name):
         # FT1 = Number of tweets of other users marked as favourites (liked) by the author
         page_number = 1
         first_pagination = True
@@ -191,13 +194,14 @@ class BasicMeasures:
         """
         This measure checks Number of followers of the user.
         """
-        return user.followers_count
+        return user['followers_count']
 
     def get_f3(self, user):
         """
         This measure checks Number of followees of the user.
         """
         return user[0]['friends_count']
+
 
     def get_all_basic_measures(self, user):
         basic_measures_dict = {}
@@ -214,24 +218,24 @@ class BasicMeasures:
         basic_measures_dict['rp1'] = self.get_rp1(replies_tweets)
         basic_measures_dict['rt1'] = self.get_rt1(tweets)
         basic_measures_dict['rt2'] = self.get_rt2(original_tweets)
-        basic_measures_dict['rt3'] = self.get_rt3(original_tweets)
-        # Need to fix ft1
-        # basic_measures_dict['ft1'] = self.get_ft1(user.screen_name)
+        # basic_measures_dict['rt3'] = self.get_rt3(original_tweets)
+        basic_measures_dict['ft1'] = self.get_ft1(user[0])
         basic_measures_dict['ft2'] = self.get_ft2(original_tweets)
         basic_measures_dict['m1'] = self.get_m1(original_tweets)
         basic_measures_dict['m2'] = self.get_m2(original_tweets)
         # Very big in compare to others
-        # basic_measures_dict['f1'] = self.get_f1(user)
+        basic_measures_dict['f1'] = self.get_f1(user[0])
         basic_measures_dict['f3'] = self.get_f3(user)
         return basic_measures_dict
 
     def check_all_users(self, users):
-        authrized_users=[]
+        authrized_users = []
         i = 0
-        while i <= len(users)/90:
-            users_as_string = ",".join(users[i*90:(i+1)*90])
-            response = requests.get(url="https://api.twitter.com/1.1/users/lookup.json?screen_name="+users_as_string, auth=self.auth.apply_auth())
-            authrized_users+=response.json()
-            i+=1
+        while i <= len(users) / 90:
+            users_as_string = ",".join(users[i * 90:(i + 1) * 90])
+            response = requests.get(url="https://api.twitter.com/1.1/users/lookup.json?screen_name=" + users_as_string,
+                                    auth=self.auth.apply_auth())
+            authrized_users += response.json()
+            i += 1
         df = pd.DataFrame(authrized_users)
         return df

@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from connector import Connector
 import pandas as pd
 from openpyxl import load_workbook
+import math
 
 
 class MyTestCase(unittest.TestCase):
@@ -80,3 +81,9 @@ class MyTestCase(unittest.TestCase):
     def empty_list(self):
         l = ['0'] * 10
         print l
+
+from time import gmtime, strftime
+a = strftime("%H:%M:%S", gmtime())
+
+a = 1-(math.exp(-1*0))
+ron=2

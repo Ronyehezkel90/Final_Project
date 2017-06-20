@@ -1,4 +1,6 @@
 from Tkinter import *
+
+from activity_measures import ActivityMeasures
 from basic_measures import BasicMeasures
 import tkMessageBox
 import numpy as np
@@ -8,7 +10,7 @@ import webbrowser
 import time
 import pandas as pd
 from tkFileDialog import askopenfilename
-from utils import write_user_data_to_file, iniatilize_results_file
+from utils import write_user_data_to_file, iniatilize_results_file, get_current_time
 from conf import BASIC_MEASURES
 
 
@@ -16,6 +18,7 @@ class GUI:
     def __init__(self):
         self.connector = None
         self.basic_measures = None
+        self.activity_measures = None
         self.authorization_type = None
         self.root = Tk()
         self.root.wm_attributes("-topmost", 1)
@@ -44,8 +47,9 @@ class GUI:
     def user_authorization_button(self, verifier_code):
         self.connector.user_authorization(verifier_code)
         self.basic_measures = BasicMeasures(self.connector)
+        self.activity_measures = ActivityMeasures()
         self.clear_root_frame()
-        self.create_gui_main_menu()
+        self.create_gui()
 
     def create_user_login_gui(self):
         self.clear_root_frame()
@@ -72,6 +76,7 @@ class GUI:
         self.authorization_type = authorization_type
         self.create_user_login_gui() if self.authorization_type == 'user' else self.connector.application_authorization()
         self.basic_measures = BasicMeasures(self.connector)
+        self.activity_measures = ActivityMeasures()
         self.clear_root_frame()
         self.create_gui()
 
@@ -87,7 +92,7 @@ class GUI:
         but_3 = Button(self.root, text="Popularity Measures", fg="white", bg="black", bd=5)
         but_4 = Button(self.root, text="Influence Measures", fg="white", bg="black", bd=5)
         but_6 = Button(self.root, text="Add user", fg="black", bg="gray", bd=5, command=self.add_user_frame_on_click)
-        but_7 = Button(self.root, text="Remove user", fg="black", bg="gray", bd=5)
+        but_7 = Button(self.root, text="Remove user", fg="black", bg="gray", bd=5, command=self.remove_user_on_click)
         but_8 = Button(self.root, text="Choose File", fg="black", bg="gray", bd=5, command=self.add_users_from_file)
 
         but_1.grid(row=1, column=1, sticky=S)
@@ -100,21 +105,27 @@ class GUI:
         self.root.title("Twitter")
         self.root.mainloop()
 
+    def remove_user_on_click(self):
+        selection = self.listbox.curselection()
+        self.listbox.delete(selection[0])
+        for i, screen_name in self.users:
+            if screen_name == '':
+                self.users.remove(i)
+        ron = 2
+
     def add_user_frame_on_click(self):
         add_user_root = Tk()
         add_user_root.wm_attributes("-topmost", 1)
         user = Label(add_user_root, text="Insert screen name:", font="-weight bold")
         self.entry_user = Entry(add_user_root)
-
         user.grid(row=1, columnspan=3)
         self.entry_user.grid(row=2, columnspan=3)
-
+        # TEST
+        self.entry_user.insert(0, 'yaniv33martin')
         dot_2 = Label(add_user_root, text=".", fg="gray")
         but_2 = Button(add_user_root, text="Add User", bd=5, width=15, command=self.add_user_on_click)
-
         dot_2.grid(row=3, sticky=W)
         but_2.grid(row=4, column=2, sticky=S)
-
         add_user_root.title("Twitter - Add User")
         add_user_root.geometry("250x150")
         add_user_root.mainloop()
@@ -133,23 +144,31 @@ class GUI:
         # y= np.arange(max_value+1)
         plt.show()
 
+    def calculate_measures(self, user, dict_of_users_dicts, results_df, count_users):
+        screen_name = user[0]['screen_name']
+        dict_of_users_dicts[screen_name] = self.basic_measures.get_all_basic_measures(user)
+        dict_of_users_dicts[screen_name].update(
+            self.activity_measures.get_all_activity_measures(dict_of_users_dicts[screen_name]))
+        df = pd.DataFrame([dict_of_users_dicts[screen_name]])
+        df['USER'] = screen_name
+        results_df = results_df.append(df)
+        results_df.to_excel('a.xlsx', index=False)
+        print str(count_users) + '. ' + screen_name + ' ::: ' + get_current_time()
+        return results_df
+
     def basic_measure_frame_on_click(self):
-        writer = iniatilize_results_file(BASIC_MEASURES)
+        print 'calculation started: ' + get_current_time()
         dict_of_users_dicts = {}
-        count_users = 1
+        count_users = 0
         results_df = pd.DataFrame()
         for user in self.users:
+            screen_name = user[0]['screen_name']
             try:
-                screen_name = user[0]['screen_name']
-                dict_of_users_dicts[screen_name] = self.basic_measures.get_all_basic_measures(user)
-                df = pd.DataFrame([dict_of_users_dicts[screen_name]])
-                df['USER'] = screen_name
-                results_df = results_df.append(df)
-                results_df.to_excel('a.xlsx', index=False)
+                results_df = self.calculate_measures(user, dict_of_users_dicts, results_df, count_users)
                 # write_user_data_to_file(count_users, writer, user, dict_of_users_dicts[user.name].values())
                 count_users += 1
-                print str(count_users)+'. '+screen_name
             except Exception as e:
+                print 'e: ' + e.message
                 print 'Limit Reached\nUser: ' + screen_name + '\nUser Number:' + str(count_users)
                 i = 0
                 while i <= 16:
@@ -157,6 +176,10 @@ class GUI:
                     i += 1
                     print str(i) + ' min passed'
                     # self.basic_measures_plot(dict_of_users_dicts)
+                try:
+                    results_df = self.calculate_measures(user, dict_of_users_dicts, results_df, count_users)
+                except Exception as e:
+                    print screen_name + ' --- Failed after failure - e: ' + e.message
 
     def add_users_from_file(self):
         Tk().withdraw()
@@ -170,7 +193,7 @@ class GUI:
 
         for user_name in users_from_file:
             if user_name in authrized_users['screen_name'].tolist():
-                user = authrized_users[authrized_users['screen_name']==user_name]
+                user = authrized_users[authrized_users['screen_name'] == user_name]
                 self.users.append(user.to_dict(orient='records'))
                 self.listbox.insert(0, user.to_dict(orient='records')[0]['screen_name'])
                 print str(user_count) + '. ' + user.screen_name
@@ -183,11 +206,15 @@ class GUI:
             tkMessageBox.showinfo("Add user", "All users added successfully")
 
     def add_user_on_click(self):
-        screen_name = self.entry_user.get()
+        user_name = self.entry_user.get()
         try:
-            user = self.basic_measures.api.get_user('@' + screen_name)
-            self.users.append(user)
-            self.listbox.insert(0, user.name)
+            authrized_users = self.basic_measures.check_all_users([user_name])
+            if user_name in authrized_users['screen_name'].tolist():
+                user = authrized_users[authrized_users['screen_name'] == user_name]
+                self.users.append(user.to_dict(orient='records'))
+                self.listbox.insert(0, user.to_dict(orient='records')[0]['screen_name'])
+                # user = self.basic_measures.api.get_user('@' + screen_name)
+                # self.users.append(user)
         except:
             tkMessageBox.showinfo("Wrong Input", "No User Found")
-        self.entry_user.delete(0, 'end')
+            self.entry_user.delete(0, 'end')
