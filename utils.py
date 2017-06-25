@@ -1,5 +1,5 @@
 from time import strftime, gmtime
-
+import time
 from openpyxl import load_workbook
 import pandas as pd
 from conf import EXCEL_FILE
@@ -38,3 +38,17 @@ def write_to_excel(self):
 
 def get_current_time():
     return str(strftime("%H:%M:%S", gmtime()))
+
+
+def handle_exception(e, screen_name, count_users):
+    if e.__class__.__name__ is 'TweepError':
+        print 'Reason: '+e.response.reason+'\nStatus Code: '+str(e.response.status_code)
+        if e.response.status_code==429 or e.__class__.__name__ is 'RateLimitError':
+            print 'Limit Reached - User: ' + screen_name + ' - User Number:' + str(count_users)
+            i = 0
+            while i <= 16:
+                time.sleep(60)
+                i += 1
+                print str(i) + ' min passed'
+    else:
+        print 'EXCEPTION!!!!! - User: ' + screen_name + ' - User Number:' + str(count_users)

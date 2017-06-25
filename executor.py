@@ -6,3 +6,8 @@ g = GUI()
 #djalbo
 #StavShaffir
 #ishmuli
+
+
+#realDonaldTrump
+#netanyahu
+#LiorSchleien

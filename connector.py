@@ -1,6 +1,7 @@
 import tweepy
 from tweepy import OAuthHandler
 
+
 class Connector:
     def __init__(self):
         consumer_key = 'P819tguRDdVJf8nXP36CquWMm'
@@ -17,5 +18,9 @@ class Connector:
         self.api = tweepy.API(self.auth)
 
     def user_authorization(self, verifier):
-        self.auth.get_access_token(verifier)
-        self.api = tweepy.API(self.auth)
+        try:
+            self.auth.get_access_token(verifier)
+            self.api = tweepy.API(self.auth)
+            return True
+        except Exception as e:
+            return False

@@ -13,7 +13,7 @@ class ActivityMeasures:
         counts the number of original tweets plus the number of retweets
         :return:
         """
-        return self.basic_measures_dict['original_tweets'] + self.basic_measures_dict['retweets']
+        return self.basic_measures_dict['ot1'] + self.basic_measures_dict['rt1']
 
     def general_activity(self):
         """
@@ -45,7 +45,7 @@ class ActivityMeasures:
         :return:
         """
         activity_score = 0
-        measures_to_sum = ['f1', 'f3', 'original_tweets', 'replies_tweets', 'retweets']
+        measures_to_sum = ['f1', 'f3', 'ot1', 'rp1', 'rt1']
         for measure in measures_to_sum:
             activity_score += self.basic_measures_dict[measure]
         return activity_score
@@ -57,7 +57,7 @@ class ActivityMeasures:
         """
         if self.basic_measures_dict['f1'] == 0:
             return 0
-        return self.basic_measures_dict['f1'] / (self.basic_measures_dict['f1'] + self.basic_measures_dict['f3'])
+        return float(self.basic_measures_dict['f1']) / (self.basic_measures_dict['f1'] + self.basic_measures_dict['f3'])
 
     def popularity(self):
         """
@@ -67,14 +67,45 @@ class ActivityMeasures:
         """
         return 1 - (math.exp(-1 * self.basic_measures_dict['f1']))
 
+    def retweet_impact(self):
+        """
+        Retweet Impact = RT2 * log(RT3)
+        :return:
+        """
+        return self.basic_measures_dict['rt2']
+
+    def interactor_ratio(self):
+        """
+        Interactor Ratio = (RT3+M4)/F1
+        """
+        return 0 if self.basic_measures_dict['f1'] == 0 else \
+            (self.basic_measures_dict['rt3'] + self.basic_measures_dict['m4']) / self.basic_measures_dict['f1']
+
+    def retweet_mention_ratio(self):
+        """
+        Retweet and Mention Ratio = (RT2+RP2)/ OT1
+        """
+        # todo - IMPLEMENT RP2/ FOR NOW RP2 = 1
+        return 0 if self.basic_measures_dict['ot1'] == 0 else \
+            (self.basic_measures_dict['rt2'] + 1) / self.basic_measures_dict['ot1']
+
+    def social_networking_potential(self, rmr, ir):
+        """
+        Social Networking Potential = (Retweet and Mention Ratio + Interactor Ratio) / 2
+        """
+        return (rmr + ir) / 2.0
+
     def get_all_activity_measures(self, basic_measures_dict):
         self.basic_measures_dict = basic_measures_dict
         activity_measures_dict = {}
         activity_measures_dict['tweet_count_score'] = self.tweet_count_score()
         activity_measures_dict['general_activity'] = self.general_activity()
-        # activity_measures_dict['topical_signal'] = self.topical_signal()
         activity_measures_dict['signal_strength'] = self.signal_strength()
         activity_measures_dict['activity_score'] = self.activity_score()
         activity_measures_dict['follower_rank'] = self.follower_rank()
         activity_measures_dict['popularity'] = self.popularity()
+        activity_measures_dict['retweet_impact'] = self.retweet_impact()
+        ir = activity_measures_dict['interactor_ratio'] = self.interactor_ratio()
+        rtr = activity_measures_dict['retweet_mention_ratio'] = self.retweet_mention_ratio()
+        activity_measures_dict['social_networking_potential'] = self.social_networking_potential(rtr, ir)
         return activity_measures_dict

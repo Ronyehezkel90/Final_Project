@@ -1,6 +1,9 @@
-/usr/bin/python2.7 /home/ron/PycharmProjects/Final_Project/executor.py
+/usr/bin/python2.7 /home/ron/pycharm-community-2017.1.2/helpers/pydev/pydevd.py --multiproc --qt-support --client 127.0.0.1 --port 40713 --file /home/ron/PycharmProjects/Final_Project/executor.py
+warning: Debugger speedups using cython not found. Run '"/usr/bin/python2.7" "/home/ron/pycharm-community-2017.1.2/helpers/pydev/setup_cython.py" build_ext --inplace' to build.
+pydev debugger: process 17528 is connecting
+
+Connected to pydev debugger (build 171.4424.42)
 Created new window in existing browser session.
-[10924:10924:0619/023559.822858:ERROR:broker_posix.cc(41)] Invalid node channel message
 0    1. yaztwitt
 Name: screen_name, dtype: object
 1    2. massimoricciut
@@ -547,16 +550,105 @@ Name: screen_name, dtype: object
 Name: screen_name, dtype: object
 273    273. asiosi27
 Name: screen_name, dtype: object
-1. yaztwitt
-2. massimoricciut
-3. papawak
-4. mishel_vaknin
-5. eitantene
-6. shaniakuka
-e: Twitter error response: status code = 401
-Limit Reached
-User: sharonrubinsky1
-User Number:6
+calculation started: 22:56:27
+0. yaztwitt ::: 22:56:29
+1. massimoricciut ::: 22:58:06
+2. papawak ::: 22:58:35
+3. mishel_vaknin ::: 22:58:36
+4. eitantene ::: 22:58:36
+5. shaniakuka ::: 22:58:37
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+sharonrubinsky1 --- Failed after failure - e: Twitter error response: status code = 401
+6. DrorMor1 ::: 22:58:40
+7. ashwaltomer ::: 22:58:41
+8. MKBroshi ::: 22:58:45
+9. levit5721 ::: 22:59:03
+10. noashus88 ::: 22:59:09
+11. yaso43474915 ::: 23:01:19
+12. 9H8CPhGtaZ74cBi ::: 23:01:21
+13. lYHOYlA4BCGITry ::: 23:01:23
+14. BerkovitchOmry ::: 23:01:24
+15. GiladTalmon ::: 23:01:48
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+yuval296 --- Failed after failure - e: Twitter error response: status code = 401
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+GruenerRaviv --- Failed after failure - e: Twitter error response: status code = 401
+16. sinai_shahar ::: 23:01:50
+17. NimrodEtzion ::: 23:01:51
+18. Obotraco ::: 23:03:40
+19. Opeabia ::: 23:03:47
+20. Yechiel05271 ::: 23:03:48
+21. Haemet_Sheli ::: 23:03:49
+22. alonagabay2 ::: 23:03:50
+23. meravi11 ::: 23:04:08
+24. shalomv99 ::: 23:04:16
+25. yalitevet ::: 23:04:17
+26. Tal_ezra_ ::: 23:04:17
+27. Zcahlon ::: 23:04:18
+28. NitayZuriel ::: 23:04:19
+29. Zikiyakobgmail1 ::: 23:04:21
+30. EladAzraf ::: 23:04:21
+31. ShimoniTzipi ::: 23:04:22
+32. zviap ::: 23:04:22
+33. rozhandaniely ::: 23:04:23
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+IttaiSopher --- Failed after failure - e: Twitter error response: status code = 401
+34. inna_yakubov ::: 23:04:25
+35. Udi_Avivi ::: 23:04:26
+36. Shimshon_Daniel ::: 23:04:27
+37. harelmoshe ::: 23:04:28
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+Butter_Fail --- Failed after failure - e: Twitter error response: status code = 401
+38. ahmadtt68 ::: 23:04:30
+39. ZGoichman ::: 23:04:30
+40. Danny_ADSR ::: 23:04:31
+41. EyalGertler ::: 23:04:31
+42. neora1d ::: 23:04:32
+43. HerrTeveth ::: 23:04:33
+44. Kobimusery ::: 23:04:51
+45. arnaviv ::: 23:05:15
+46. idan_aha ::: 23:05:16
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+TzahiCohen --- Failed after failure - e: Twitter error response: status code = 401
+47. boazper ::: 23:05:18
+48. AaronKahn8 ::: 23:05:45
+49. nM3RJprMBaJdPgs ::: 23:05:46
+50. TastySpaceApple ::: 23:05:53
+51. Amitzcar ::: 23:05:54
+52. OrnaKadosh ::: 23:05:55
+53. RakTachles ::: 23:05:55
+54. EilamD ::: 23:05:56
+55. kfiron ::: 23:07:26
+56. eitan_braaf ::: 23:07:27
+57. Hadusky ::: 23:08:11
+58. malvina_sagi ::: 23:08:11
+59. amititzhaki ::: 23:08:12
+60. chen_gol ::: 23:08:12
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+shmuliksan13 --- Failed after failure - e: Twitter error response: status code = 401
+61. itamarlan ::: 23:08:14
+62. atefasiba ::: 23:08:15
+63. dz3mail ::: 23:08:16
+64. guy_gueta600 ::: 23:08:17
+65. YexWB4teffjpjFt ::: 23:08:18
+66. MosheBarOr99 ::: 23:08:18
+Reason: Too Many Requests
+Status Code: 429
+Limit Reached - User: arco_butter - User Number:67
 1 min passed
 2 min passed
 3 min passed
@@ -574,20 +666,78 @@ User Number:6
 15 min passed
 16 min passed
 17 min passed
-7. DrorMor1
-8. ashwaltomer
-9. MKBroshi
-10. levit5721
-11. noashus88
-12. yaso43474915
-13. 9H8CPhGtaZ74cBi
-14. lYHOYlA4BCGITry
-15. BerkovitchOmry
-16. GiladTalmon
-e: Twitter error response: status code = 401
-Limit Reached
-User: yuval296
-User Number:16
+Twitter error response: status code = 429
+67. arco_butter ::: 23:26:04
+67. Shayboharon1 ::: 23:28:48
+68. AfekShechter ::: 23:28:53
+69. GilVerthaim ::: 23:28:54
+70. shimonhalfon ::: 23:30:39
+71. friemant ::: 23:30:42
+72. ehudk ::: 23:30:44
+73. tomershaller ::: 23:30:45
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+dannymoualem --- Failed after failure - e: Twitter error response: status code = 401
+74. ShulTheCool ::: 23:30:47
+75. namasteanana ::: 23:30:48
+76. perahb6 ::: 23:30:49
+77. SpicerMate ::: 23:30:50
+78. boeing747787 ::: 23:30:51
+79. _alon_ ::: 23:30:52
+80. GorfungY ::: 23:30:53
+81. dmustafah ::: 23:30:54
+82. yonaKfir ::: 23:30:58
+83. NKirshtein ::: 23:30:58
+84. sew_tak ::: 23:31:04
+85. marstrina ::: 23:33:37
+86. NserMDawabshi ::: 23:33:38
+87. Marikbrest ::: 23:33:48
+88. Spider_Chen ::: 23:36:21
+89. MeirKlibanoff ::: 23:36:24
+90. ShimoniNir ::: 23:36:24
+91. zoganohar ::: 23:36:25
+92. 28n81D0jmPpruPA ::: 23:36:32
+93. vered_asaf ::: 23:36:32
+94. NZigron ::: 23:36:33
+95. AyeshShwamra ::: 23:36:34
+96. Youngmeretz ::: 23:36:38
+97. nitaybar ::: 23:36:39
+98. DroriOz ::: 23:36:40
+99. mor_vardi ::: 23:36:41
+100. HadassNick ::: 23:36:42
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+LemuelMelamed --- Failed after failure - e: Twitter error response: status code = 401
+101. ShternDaniel ::: 23:36:45
+102. irisyovel16 ::: 23:37:04
+103. OferShamayev ::: 23:37:05
+104. OfirShabtai ::: 23:37:06
+105. amranim1 ::: 23:37:07
+106. gilimiz8 ::: 23:37:07
+107. KlosterBergen ::: 23:37:08
+108. _tamirstl ::: 23:37:09
+109. GiladBarOz ::: 23:37:10
+110. LdCIi7ucU5wEDHp ::: 23:37:11
+111. YealaM ::: 23:37:12
+112. SelinaSteiner9 ::: 23:37:23
+113. BenatarAnat ::: 23:37:24
+114. roeenu12 ::: 23:37:25
+115. Natiicer ::: 23:37:26
+116. Danniel_razon ::: 23:37:27
+117. DShachar ::: 23:37:28
+118. Superv_Enlight ::: 23:37:31
+119. k4x45j ::: 23:37:31
+120. shaiwoll ::: 23:37:32
+121. kobi_shasha ::: 23:37:33
+122. omerja9 ::: 23:37:37
+123. danielorc ::: 23:38:07
+124. ymaoz ::: 23:38:10
+125. NevoBerger ::: 23:38:11
+Reason: Too Many Requests
+Status Code: 429
+Limit Reached - User: Leon1andOnly - User Number:126
 1 min passed
 2 min passed
 3 min passed
@@ -605,10 +755,149 @@ User Number:16
 15 min passed
 16 min passed
 17 min passed
-e: Twitter error response: status code = 401
-Limit Reached
-User: GruenerRaviv
-User Number:16
+Twitter error response: status code = 429
+126. Leon1andOnly ::: 23:55:54
+126. yanivch ::: 23:55:55
+127. fucjin ::: 23:56:01
+128. odeddan ::: 23:56:02
+129. karinmic ::: 23:56:03
+130. waseemhe ::: 23:56:04
+131. ShaharAlon1 ::: 23:56:06
+132. 28_elad ::: 23:56:07
+133. AvivAvni ::: 23:56:08
+134. dan_fain ::: 23:56:08
+135. Gadi3232 ::: 23:56:10
+136. 300050007000 ::: 23:56:33
+137. EfroniDor ::: 23:56:34
+138. KerenElkayam ::: 23:56:35
+139. yotaman12 ::: 23:56:37
+140. erezfisher ::: 23:56:44
+141. ay_koo ::: 23:56:49
+142. shlomi658 ::: 23:56:50
+143. DJANGO_TV ::: 23:56:52
+144. GeulaEitan ::: 23:56:54
+145. bentsi4 ::: 23:57:06
+146. GalKatz1 ::: 23:57:07
+147. 4KaB34BvsRqGRqf ::: 23:57:08
+148. ShakedZe ::: 23:57:16
+149. fis_angela ::: 23:57:17
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+kimmel --- Failed after failure - e: Twitter error response: status code = 401
+150. hagail ::: 23:57:28
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+HorinBen --- Failed after failure - e: Twitter error response: status code = 401
+151. chaichairiko ::: 23:57:30
+152. NogaGoldbach ::: 23:57:31
+153. SaritBublil ::: 23:57:32
+154. R2EThTFzXzTqLNw ::: 23:57:39
+155. elazarik ::: 23:57:40
+156. sharonit14 ::: 23:57:41
+157. OAbergel ::: 23:57:43
+158. nidalgbareen ::: 23:57:45
+159. baati_raeeti ::: 23:57:53
+160. hadasshtaif ::: 23:58:16
+161. HufYans ::: 23:58:17
+162. Zadokda ::: 23:58:20
+163. AdiDZ ::: 23:58:21
+164. Ayala0081 ::: 23:58:22
+165. ahmad1masoud ::: 23:58:23
+166. BretlerT ::: 23:58:24
+167. yonaesh ::: 23:58:27
+168. LIYLAAAAA ::: 23:58:32
+169. AssiZahr ::: 23:58:33
+170. HaimoMiri ::: 23:58:34
+171. ArielSharonUncl ::: 23:58:41
+172. RosenthalStell2 ::: 23:58:42
+173. AP999999RONY ::: 23:58:43
+174. SlomiGdalia ::: 23:58:44
+175. TheKerbel ::: 23:58:45
+176. ShidloMatan ::: 23:58:46
+177. delorme_un ::: 23:58:47
+178. yuvalsuzana ::: 23:58:48
+179. officialpenzo ::: 23:58:49
+180. DandanG52736183 ::: 23:58:50
+181. PatakyLang ::: 23:58:51
+182. shakedmo1 ::: 23:58:52
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+joelsam63 --- Failed after failure - e: Twitter error response: status code = 401
+183. EssnerUzi ::: 23:58:55
+184. Kayan44898894 ::: 23:58:56
+185. keiko_bertschi ::: 23:58:57
+186. BoazSherez ::: 23:58:58
+187. dbressler_10405 ::: 23:59:37
+188. breslevkav ::: 23:59:57
+189. Td1gfG1WtY6X2M1 ::: 23:59:58
+190. fat7e_fate7 ::: 23:59:59
+191. hX0yaaPjfTTElgW ::: 00:00:00
+192. orinetel ::: 00:00:01
+193. JosShmuel ::: 00:00:03
+194. alisya110 ::: 00:00:26
+195. jodywillis80 ::: 00:00:27
+196. ngawangtenjis ::: 00:00:28
+197. arikblum ::: 00:00:29
+198. moshe_sabach ::: 00:02:27
+199. DorDaLavi ::: 00:02:27
+200. YakironL ::: 00:02:29
+201. shaynajuszczak3 ::: 00:02:30
+202. IsraelSahar ::: 00:02:31
+203. MoavVardi ::: 00:03:32
+204. Roy94173474 ::: 00:03:33
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+ariel_m909 --- Failed after failure - e: Twitter error response: status code = 401
+205. JMXghost ::: 00:03:41
+206. AungMya43620475 ::: 00:03:42
+207. NiliCaspi ::: 00:03:43
+208. zoharm511 ::: 00:03:44
+209. SamWhitefield1 ::: 00:03:47
+210. ahmethakant1 ::: 00:03:48
+211. V8f4lfLGQ4e8yEG ::: 00:03:49
+212. margolin_efraim ::: 00:03:50
+213. glaydsweaver538 ::: 00:03:51
+214. pnpatyo ::: 00:03:52
+215. Mosh_759 ::: 00:05:36
+216. DavidShuster ::: 00:06:23
+217. JoabRosenberg ::: 00:06:24
+218. Kimsambal1 ::: 00:06:25
+219. EAvriel ::: 00:06:26
+220. UQYJIanVz2DZ5ra ::: 00:06:27
+221. speers_wendolyn ::: 00:06:28
+222. roey_hadad ::: 00:06:29
+223. RoniCoh94441676 ::: 00:06:30
+224. I2XDLc5QAz9Soht ::: 00:06:30
+225. FANHRDn79BJeP6Q ::: 00:06:35
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+IanFitz1956 --- Failed after failure - e: Twitter error response: status code = 401
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+omertarab --- Failed after failure - e: Twitter error response: status code = 401
+226. Siwarth1 ::: 00:06:39
+227. veredbouskila ::: 00:06:40
+228. ChasyaKaplan ::: 00:06:41
+229. wildabaszczews6 ::: 00:06:42
+230. YaserWakid ::: 00:06:43
+231. rickischonfruc3 ::: 00:06:44
+232. a0547134036 ::: 00:06:45
+233. FievFpCNPfjEWHk ::: 00:06:46
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+tamirn2610 --- Failed after failure - e: Twitter error response: status code = 401
+234. kashi_eli ::: 00:06:48
+235. lbhwtroot1841 ::: 00:06:49
+Reason: Too Many Requests
+Status Code: 429
+Limit Reached - User: LouiseRozema - User Number:236
 1 min passed
 2 min passed
 3 min passed
@@ -626,538 +915,35 @@ User Number:16
 15 min passed
 16 min passed
 17 min passed
-17. sinai_shahar
-18. NimrodEtzion
-19. Obotraco
-20. Opeabia
-21. Yechiel05271
-22. Haemet_Sheli
-23. alonagabay2
-24. meravi11
-25. shalomv99
-26. yalitevet
-27. Tal_ezra_
-28. Zcahlon
-29. NitayZuriel
-30. Zikiyakobgmail1
-31. EladAzraf
-32. ShimoniTzipi
-33. zviap
-34. rozhandaniely
-e: Twitter error response: status code = 401
-Limit Reached
-User: IttaiSopher
-User Number:34
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-35. inna_yakubov
-36. Udi_Avivi
-37. Shimshon_Daniel
-38. harelmoshe
-e: Twitter error response: status code = 401
-Limit Reached
-User: Butter_Fail
-User Number:38
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-39. ahmadtt68
-40. ZGoichman
-41. Danny_ADSR
-42. EyalGertler
-43. neora1d
-44. HerrTeveth
-45. Kobimusery
-46. arnaviv
-47. idan_aha
-e: Twitter error response: status code = 401
-Limit Reached
-User: TzahiCohen
-User Number:47
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-48. boazper
-49. AaronKahn8
-50. nM3RJprMBaJdPgs
-51. TastySpaceApple
-52. Amitzcar
-53. OrnaKadosh
-54. RakTachles
-55. EilamD
-56. kfiron
-57. eitan_braaf
-58. Hadusky
-59. malvina_sagi
-60. amititzhaki
-61. chen_gol
-e: Twitter error response: status code = 401
-Limit Reached
-User: shmuliksan13
-User Number:61
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-62. itamarlan
-63. atefasiba
-64. dz3mail
-65. guy_gueta600
-66. YexWB4teffjpjFt
-67. MosheBarOr99
-68. arco_butter
-69. Shayboharon1
-70. AfekShechter
-71. GilVerthaim
-72. shimonhalfon
-73. friemant
-74. ehudk
-75. tomershaller
-e: Twitter error response: status code = 401
-Limit Reached
-User: dannymoualem
-User Number:75
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-76. ShulTheCool
-77. namasteanana
-78. perahb6
-79. SpicerMate
-80. boeing747787
-81. _alon_
-82. GorfungY
-83. dmustafah
-84. yonaKfir
-85. NKirshtein
-86. sew_tak
-87. marstrina
-88. NserMDawabshi
-89. Marikbrest
-90. Spider_Chen
-91. MeirKlibanoff
-92. ShimoniNir
-93. zoganohar
-94. 28n81D0jmPpruPA
-95. vered_asaf
-96. NZigron
-97. AyeshShwamra
-98. Youngmeretz
-99. nitaybar
-100. DroriOz
-101. mor_vardi
-102. HadassNick
-e: Twitter error response: status code = 401
-Limit Reached
-User: LemuelMelamed
-User Number:102
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-103. ShternDaniel
-104. irisyovel16
-105. OferShamayev
-106. OfirShabtai
-107. amranim1
-108. gilimiz8
-109. KlosterBergen
-110. _tamirstl
-111. GiladBarOz
-112. LdCIi7ucU5wEDHp
-113. YealaM
-114. SelinaSteiner9
-115. BenatarAnat
-116. roeenu12
-117. Natiicer
-118. Danniel_razon
-119. DShachar
-120. Superv_Enlight
-121. k4x45j
-122. shaiwoll
-123. kobi_shasha
-124. omerja9
-125. danielorc
-126. ymaoz
-127. NevoBerger
-128. Leon1andOnly
-129. yanivch
-130. fucjin
-131. odeddan
-132. karinmic
-133. waseemhe
-134. ShaharAlon1
-135. 28_elad
-136. AvivAvni
-137. dan_fain
-138. Gadi3232
-139. 300050007000
-140. EfroniDor
-141. KerenElkayam
-142. yotaman12
-143. erezfisher
-144. ay_koo
-145. shlomi658
-146. DJANGO_TV
-147. GeulaEitan
-148. bentsi4
-149. GalKatz1
-150. 4KaB34BvsRqGRqf
-151. ShakedZe
-152. fis_angela
-e: Twitter error response: status code = 401
-Limit Reached
-User: kimmel
-User Number:152
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-153. hagail
-e: Twitter error response: status code = 401
-Limit Reached
-User: HorinBen
-User Number:153
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-154. chaichairiko
-155. NogaGoldbach
-156. SaritBublil
-157. R2EThTFzXzTqLNw
-158. elazarik
-159. sharonit14
-160. OAbergel
-161. nidalgbareen
-162. baati_raeeti
-163. hadasshtaif
-164. HufYans
-165. Zadokda
-166. AdiDZ
-167. Ayala0081
-168. ahmad1masoud
-169. BretlerT
-170. yonaesh
-171. LIYLAAAAA
-172. AssiZahr
-173. HaimoMiri
-174. ArielSharonUncl
-175. RosenthalStell2
-176. AP999999RONY
-177. SlomiGdalia
-178. TheKerbel
-179. ShidloMatan
-180. delorme_un
-181. yuvalsuzana
-182. officialpenzo
-183. DandanG52736183
-184. PatakyLang
-185. shakedmo1
-e: Twitter error response: status code = 401
-Limit Reached
-User: joelsam63
-User Number:185
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-186. EssnerUzi
-187. Kayan44898894
-188. keiko_bertschi
-189. BoazSherez
-190. dbressler_10405
-191. breslevkav
-192. Td1gfG1WtY6X2M1
-193. fat7e_fate7
-194. hX0yaaPjfTTElgW
-195. orinetel
-196. JosShmuel
-197. alisya110
-198. jodywillis80
-199. ngawangtenjis
-200. arikblum
-201. moshe_sabach
-202. DorDaLavi
-203. YakironL
-204. shaynajuszczak3
-205. IsraelSahar
-206. MoavVardi
-207. Roy94173474
-e: Twitter error response: status code = 401
-Limit Reached
-User: ariel_m909
-User Number:207
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-208. JMXghost
-209. AungMya43620475
-210. NiliCaspi
-211. zoharm511
-212. SamWhitefield1
-213. ahmethakant1
-214. V8f4lfLGQ4e8yEG
-215. margolin_efraim
-216. glaydsweaver538
-217. pnpatyo
-218. Mosh_759
-219. DavidShuster
-220. JoabRosenberg
-221. Kimsambal1
-222. EAvriel
-223. UQYJIanVz2DZ5ra
-224. speers_wendolyn
-225. roey_hadad
-226. RoniCoh94441676
-227. I2XDLc5QAz9Soht
-228. FANHRDn79BJeP6Q
-e: Twitter error response: status code = 401
-Limit Reached
-User: IanFitz1956
-User Number:228
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-e: Twitter error response: status code = 401
-Limit Reached
-User: omertarab
-User Number:228
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-229. Siwarth1
-230. veredbouskila
-231. ChasyaKaplan
-232. wildabaszczews6
-233. YaserWakid
-234. rickischonfruc3
-235. a0547134036
-236. FievFpCNPfjEWHk
-e: Twitter error response: status code = 401
-Limit Reached
-User: tamirn2610
-User Number:236
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-237. kashi_eli
-238. lbhwtroot1841
-239. LouiseRozema
-240. tresawaggoner31
-241. leoniemallonee2
-242. Ashiengelman
-243. mohamadiab
-244. shoshana_stein
-245. lainestancill11
-246. cherishborden31
-247. HbeashTony
-248. OhanaZion
-249. vhzyannc79
-250. HazbounRani
-e: Twitter error response: status code = 401
-Limit Reached
-User: moshetest
-User Number:250
-1 min passed
-2 min passed
-3 min passed
-4 min passed
-5 min passed
-6 min passed
-7 min passed
-8 min passed
-9 min passed
-10 min passed
-11 min passed
-12 min passed
-13 min passed
-14 min passed
-15 min passed
-16 min passed
-17 min passed
-251. Vlpdt5nJwpW15k3
-252. asaf1809
-253. 0mhxiAdlCT7emXZ
-254. PankajBhatiya9
-255. DLuJB7JeChPUtoJ
-256. asiosi27
-
+Twitter error response: status code = 429
+236. LouiseRozema ::: 00:26:08
+236. tresawaggoner31 ::: 00:26:08
+237. leoniemallonee2 ::: 00:26:10
+238. Ashiengelman ::: 00:26:11
+239. mohamadiab ::: 00:26:12
+240. shoshana_stein ::: 00:26:13
+241. lainestancill11 ::: 00:26:17
+242. cherishborden31 ::: 00:26:20
+243. HbeashTony ::: 00:26:21
+244. OhanaZion ::: 00:26:22
+245. vhzyannc79 ::: 00:26:23
+246. HazbounRani ::: 00:26:24
+Reason: Authorization Required
+Status Code: 401
+Twitter error response: status code = 401
+moshetest --- Failed after failure - e: Twitter error response: status code = 401
+247. Vlpdt5nJwpW15k3 ::: 00:26:31
+248. asaf1809 ::: 00:26:32
+249. 0mhxiAdlCT7emXZ ::: 00:26:33
+250. PankajBhatiya9 ::: 00:26:34
+251. DLuJB7JeChPUtoJ ::: 00:26:35
+252. asiosi27 ::: 00:26:37
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/lib-tk/Tkinter.py", line 1540, in __call__
+    return self.func(*args)
+  File "/home/ron/PycharmProjects/Final_Project/gui.py", line 240, in basic_measure_frame_on_click
+    self.calculate_activity_measures(user, dict_of_users_dicts)
+  File "/home/ron/PycharmProjects/Final_Project/gui.py", line 207, in calculate_activity_measures
+    activity_dict = self.activity_measures.get_all_activity_measures(dict_of_users_dicts[screen_name])
+KeyError: u'sharonrubinsky1'
