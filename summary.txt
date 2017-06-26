@@ -1,0 +1,37 @@
+****************   Dates   ****************
+From Date: 2016-06-26 21:23:59.308889
+To Date: 2017-06-26 21:23:59.309043
+****************   Users   ****************
+Total users: 10
+Calculated users: 10
+Non-Active users: 0
+Protected users: 0
+Unknown Problem users: 0
+****************   HashTags   ****************
+HashTags: []
+****************   Users Detailed   ****************
+Total users: 
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+Calculated Users:
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+	yaniv33martin
+Non-Active Users:
+Protected Users:
+Unknown Problem Users:
