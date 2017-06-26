@@ -48,8 +48,9 @@ def write_summary_to_file(model, results_df):
     f.close()
 
 def update_sleep_timer(gui, time_passed):
-    gui.current_user_label.config(text='TWITTER rate limiting has been reached\nThe system is in Sleep mode for 15 minutes\n'+str(time_passed)+' minutes passed.')
+    gui.current_user_label.config(text='TWITTER rate limiting has been reached.\nThe system is in Sleep-Mode for 15 minutes,\n'+str(time_passed)+' minutes passed.')
     gui.estimated_label.config(text="Last Estimated Time Remaining: " + str(gui.remain_time.time()))
+    gui.root.update()
 
 def sleep_15_min(gui):
     i = 0

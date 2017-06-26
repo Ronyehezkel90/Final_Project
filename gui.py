@@ -261,7 +261,7 @@ class GUI:
         # each user takes 10 sec
         self.remain_time = datetime.datetime.strptime('00:00', '%H:%M')
         remain_users = len(self.users)-count_users
-        self.remain_time = self.remain_time + datetime.timedelta(minutes=15 * (remain_users / 14))
+        self.remain_time = self.remain_time + datetime.timedelta(minutes=int(15 * (remain_users / 14.0)))
         self.remain_time = self.remain_time + datetime.timedelta(seconds=remain_users * 5)
         self.estimated_label.config(text="Estimated Time Remaining: " + str(self.remain_time.time()))
         self.root.update()
