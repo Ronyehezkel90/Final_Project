@@ -1,11 +1,10 @@
-import datetime
-
 import math
 import pandas as pd
 import requests
 import tweepy
-
+import datetime
 from conf import RT3_THRESHOLD
+from dateutil.relativedelta import relativedelta
 
 base_address = 'https://twitter.com/{}/status/{}'
 
@@ -15,6 +14,7 @@ class BasicMeasures:
         self.api = connector.api
         self.auth = connector.auth
         self.mentions = {'total_mentions': {}, 'user_mentions': {}}
+        self.dates = None
 
     def get_all_followers(self):
         # NOT WORKING
@@ -27,17 +27,12 @@ class BasicMeasures:
         tweets = []
         for tweet in tweepy.Cursor(self.api.user_timeline, screen_name=name, exclude_replies=False,
                                    include_rts=True).items():
-            if self.one_year_ago_tweet(tweet):
-                tweets.append(tweet)
-            else:
-                break
+            if tweet.created_at <= self.dates['to']:
+                if tweet.created_at >= self.dates['from']:
+                    tweets.append(tweet)
+                else:
+                    break
         return tweets
-
-    def one_year_ago_tweet(self, tweet):
-        one_year_ago = datetime.datetime.today() - datetime.timedelta(days=365)
-        if tweet.created_at >= one_year_ago:
-            return True
-        return False
 
     def count_by_measure(self, measure, tweets):
         response = []
@@ -113,9 +108,8 @@ class BasicMeasures:
 
     def get_rp2(self, original_tweets):
         # RP2 = Number of OTs posted by the author and replied by other users.
-        #todo implementation
-        for tweet in original_tweets:
-            tweet = 2
+        # todo implementation
+        return 1
 
     def get_retweets(self, tweets):
         return self.count_by_measure('retweets', tweets)
@@ -153,7 +147,7 @@ class BasicMeasures:
             if tweet.retweet_count > 0:
                 count_users += tweet.retweet_count
                 retweeted_tweets += 1
-        return (count_users / float(retweeted_tweets)) * RT3_THRESHOLD if retweeted_tweets> 0 else 0
+        return (count_users / float(retweeted_tweets)) * RT3_THRESHOLD if retweeted_tweets > 0 else 0
 
     def get_ft1(self, user):
         return user[0]['favourites_count']
@@ -231,7 +225,7 @@ class BasicMeasures:
         return user[0]['friends_count']
 
     def get_topical_signal(self, all_tweets, discuss_rank):
-        return discuss_rank / float(len(all_tweets)) if len(all_tweets)>0 else 0
+        return discuss_rank / float(len(all_tweets)) if len(all_tweets) > 0 else 0
 
     def get_discuss_rank(self, all_tweets, topical_hashtags):
         counter = 0
@@ -268,7 +262,7 @@ class BasicMeasures:
         proportion = 60 * 60 * 24
         for retweet in retweets:
             time_passed += (retweet.created_at - retweet.retweeted_status.created_at).seconds
-        return (len(retweets) / (time_passed / proportion)) / len(tweets) if len(tweets)>0 else 0
+        return (len(retweets) / (time_passed / proportion)) / len(tweets) if len(tweets) > 0 else 0
 
     def set_user_mentions(self, tweets):
         mentiond_by_user = []
@@ -288,7 +282,8 @@ class BasicMeasures:
             all_users_measures_dict[user]['m4'] = self.mentions['user_mentions'][user]
             all_users_measures_dict[user]['mention_impact'] = self.get_mention_impact(all_users_measures_dict[user])
 
-    def get_all_basic_measures(self, user, hashtags):
+    def get_all_basic_measures(self, user, hashtags, dates=None):
+        self.dates = dates if dates else {'from': datetime.datetime.now() - relativedelta(years=1), 'to': datetime.datetime.today()}
         basic_measures_dict = {}
         screen_name = user[0]['screen_name']
         tweets = self.get_tweets(screen_name)

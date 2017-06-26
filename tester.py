@@ -1,3 +1,5 @@
+import datetime
+
 from basic_measures import BasicMeasures
 import unittest
 from activity_measures import ActivityMeasures
@@ -57,3 +59,16 @@ class MyTestCase(unittest.TestCase):
 
             count_users += 1
         print 'Measures file is ready!'
+
+    def check_user_mean_time(self):
+        time = datetime.datetime.strptime('03:55', '%H:%M').time()
+        print time
+        times=[]
+        with open('log') as f:
+            content = f.readlines()
+        for line in content:
+            if ':::' in line:
+                times.append(line[line.find('::: ')+4:-1])
+        ron=2
+
+
