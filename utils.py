@@ -1,3 +1,6 @@
+import os
+import subprocess
+import tkMessageBox
 from time import strftime, gmtime
 import time
 import datetime
@@ -106,3 +109,10 @@ def write_files(model, results_df):
     results_df = results_df[REORDER]
     results_df.to_excel(EXCEL_FILE, index=False)
     write_summary_to_file(model, results_df)
+
+
+def finish_calculation():
+    print 'Measures file is ready!'
+    tkMessageBox.showinfo("Bye Bye",
+                          "Running Complete!\nMeasures File: " + EXCEL_FILE + "\nSummary File: " + SUMMARY_FILE)
+    os.startfile(EXCEL_FILE)

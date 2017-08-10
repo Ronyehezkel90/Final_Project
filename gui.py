@@ -1,7 +1,5 @@
 from Tkinter import *
-
 import datetime
-
 from activity_measures import ActivityMeasures
 from basic_measures import BasicMeasures
 import tkMessageBox
@@ -10,29 +8,25 @@ import webbrowser
 import pandas as pd
 from tkFileDialog import askopenfilename
 from utils import get_current_time, handle_exception, sleep_15_min, remove_prob_users, get_default_date, get_dates, \
-    write_summary_to_file, write_files
-from conf import REORDER, EXCEL_FILE, SUMMARY_FILE
+    write_files, finish_calculation
+from conf import EXCEL_FILE, SYSTEM_TITLE, SYSTEM_DESCRIPTION, SYSTEM_CREATORS
 
 
 class GUI:
     def __init__(self):
         self.connector = None
-        self.basic_measures = None
-        self.activity_measures = None
-        self.authorization_type = None
         self.root = Tk()
         self.root.wm_attributes("-topmost", 1)
         self.root.geometry('{}x{}'.format(600, 400))
         self.root.resizable(width=False, height=False)
-        self.users = []
-        self.hashtags = []
-        self.dates = None
-        self.prob_users = {'not_active': [], 'protected': [], 'unknown_prob': []}
-        self.login_gui()
+        self.back_on_click()
 
     def login_gui(self):
         self.connector = Connector()
-        user_login_button = Button(self.root, text="Login as user", fg="white", bg="black", bd=5,
+        Label(text=SYSTEM_TITLE, font=("Helvetica", 20)).pack(side=TOP, padx=10, pady=10)
+        Label(text=SYSTEM_CREATORS, font=("Helvetica", 13)).pack(side=BOTTOM, padx=10, pady=10)
+        Label(text=SYSTEM_DESCRIPTION, font=("Helvetica", 10)).pack(side=BOTTOM, padx=10, pady=10)
+        user_login_button = Button(self.root, text="Login as twitter user", fg="white", bg="black", bd=5,
                                    command=lambda: self.login_controller('user'))
         app_login_button = Button(self.root, text="Login as applicaton", fg="white", bg="black", bd=5,
                                   command=lambda: self.login_controller('app'))
@@ -54,7 +48,7 @@ class GUI:
             self.clear_root_frame()
             self.create_gui()
         else:
-            tkMessageBox.showinfo("Wrong Authorization", "Please check your number")
+            tkMessageBox.showinfo("Wrong Authorization", "Please check your code")
 
     def create_user_login_gui(self):
         self.clear_root_frame()
@@ -66,7 +60,7 @@ class GUI:
             webbrowser.open_new(self.connector.auth.get_authorization_url())
 
         link.bind("<Button-1>", callback)
-        Label(text='Write here your code').pack(side=TOP, padx=10, pady=10)
+        Label(text='Enter your code').pack(side=TOP, padx=10, pady=10)
         '+self.connector.auth.get_authorization_url()+'
         entry = Entry(self.root, width=10)
         entry.pack(side=TOP, padx=10, pady=10)
@@ -75,7 +69,21 @@ class GUI:
                                    command=lambda: self.user_authorization_button(entry.get()))
         user_login_button.pack(side=TOP, padx=10, pady=10)
         user_login_button.place(relx=0.5, rely=0.5, anchor=CENTER)
+        back_button = Button(self.root, text="Back", fg="white", bg="black", bd=5, command=self.back_on_click)
+        back_button.pack(side=TOP, padx=10, pady=10)
+        back_button.place(relx=0.5, rely=0.6, anchor=CENTER)
         self.root.mainloop()
+
+    def back_on_click(self):
+        self.clear_root_frame()
+        self.basic_measures = None
+        self.activity_measures = None
+        self.authorization_type = None
+        self.users = []
+        self.hashtags = []
+        self.dates = None
+        self.prob_users = {'not_active': [], 'protected': [], 'unknown_prob': []}
+        self.login_gui()
 
     def login_controller(self, authorization_type):
         self.authorization_type = authorization_type
@@ -98,18 +106,23 @@ class GUI:
         but_date = Button(self.root, text="Choose Dates", fg="black", bg="gray", bd=5, command=self.date_frame_on_click)
         but_1 = Button(self.root, text="Calculate", fg="white", bg="black", bd=5,
                        command=self.basic_measure_frame_on_click)
+        back_button = Button(self.root, text="Back", fg="white", bg="black", bd=5, command=self.back_on_click)
         but_2 = Button(self.root, text="Add Hashtags", fg="black", bg="gray", bd=5,
                        command=self.insert_hashtags_frame_on_click)
         but_6 = Button(self.root, text="Add user", fg="black", bg="gray", bd=5, command=self.add_user_frame_on_click)
         but_7 = Button(self.root, text="Remove", fg="black", bg="gray", bd=5, command=self.remove_user_on_click)
         but_8 = Button(self.root, text="Users File", fg="black", bg="gray", bd=5, command=self.add_users_from_file)
+        but_9 = Button(self.root, text="Remove all", fg="black", bg="gray", bd=5,
+                       command=self.remove_all_users_on_click)
 
         but_date.grid(row=1, column=2, sticky=S)
         but_1.grid(row=3, column=3, sticky=S)
+        back_button.grid(row=4, column=3, sticky=S)
         but_2.grid(row=7, column=2, sticky=S)
         but_6.grid(row=2, column=2, sticky=S)
         but_7.grid(row=3, column=2, sticky=S)
         but_8.grid(row=4, column=2, sticky=S)
+        but_9.grid(row=5, column=2, sticky=S)
         self.root.title("Twitter")
         self.root.mainloop()
 
@@ -196,6 +209,12 @@ class GUI:
         add_user_root.title("Twitter - Add HASHTAG")
         add_user_root.geometry("250x150")
 
+    def remove_all_users_on_click(self):
+        for idx, user in enumerate(self.users):
+            del (self.users[idx])
+        self.listbox.delete(0, END)
+        self.prob_users = {'not_active': [], 'protected': [], 'unknown_prob': []}
+
     def remove_user_on_click(self):
         if len(self.listbox.curselection()) == 1:
             list_index = self.listbox.curselection()[0]
@@ -255,12 +274,12 @@ class GUI:
             df[measure] = df['USER'].apply(lambda user_name: dict_of_users_dicts[user_name][measure])
 
     def set_gui_status(self, screen_name, count_users, ):
-        self.current_user_label.config(text='Current User: '+screen_name)
-        self.out_of_label.config(text="Calculated: "+str(count_users)+" / " + str(len(self.users)))
+        self.current_user_label.config(text='Current User: ' + screen_name)
+        self.out_of_label.config(text="Calculated: " + str(count_users) + " / " + str(len(self.users)))
         # every 14 users more or less the system wait for 15 min.
         # each user takes 10 sec
         self.remain_time = datetime.datetime.strptime('00:00', '%H:%M')
-        remain_users = len(self.users)-count_users
+        remain_users = len(self.users) - count_users
         self.remain_time = self.remain_time + datetime.timedelta(minutes=int(15 * (remain_users / 14.0)))
         self.remain_time = self.remain_time + datetime.timedelta(seconds=remain_users * 5)
         self.estimated_label.config(text="Estimated Time Remaining: " + str(self.remain_time.time()))
@@ -299,32 +318,42 @@ class GUI:
         self.add_user_based_measures_to_dataframe(results_df, dict_of_users_dicts)
         return results_df
 
+    def ready_for_calculation(self):
+        try:
+            excel_file = open(EXCEL_FILE, "r+")
+        except IOError:
+            tkMessageBox.showinfo("Permission problem", "Please close excel '"+EXCEL_FILE+"' File")
+            return False
+        if not self.users:
+            tkMessageBox.showinfo("No users", "Please add users first")
+            return False
+        return True
+
     def basic_measure_frame_on_click(self):
-        print 'calculation started: ' + get_current_time()
-        self.clear_root_frame()
-        self.calculation_title_label = Label(self.root, text="CALCULATING", font=("-weight bold", 20))
-        self.current_user_label = Label(self.root, text="Current User:", font=20)
-        self.out_of_label = Label(self.root, text="Calculated: 0 / " + str(len(self.users)), font=20)
-        self.estimated_label = Label(self.root, text="Estimated Time Remaining: ", font=20)
-        pad = 20
-        self.calculation_title_label.pack(side=TOP, padx=pad, pady=pad)
-        self.current_user_label.pack(side=TOP, padx=pad, pady=pad)
-        self.out_of_label.pack(side=TOP, padx=pad, pady=pad)
-        self.estimated_label.pack(side=TOP, padx=pad, pady=pad)
-        results_df, dict_of_users_dicts = self.run_basic_calculation()
-        results_df = self.run_advanced_calculation(results_df, dict_of_users_dicts)
-        write_files(self, results_df)
-        print 'Measures file is ready!'
-        tkMessageBox.showinfo("Bye Bye",
-                              "Running Complete!\nMeasures File: " + EXCEL_FILE + "\nSummary File: " + SUMMARY_FILE)
-        self.root.destroy()
+        if self.ready_for_calculation():
+            print 'calculation started: ' + get_current_time()
+            self.clear_root_frame()
+            self.calculation_title_label = Label(self.root, text="CALCULATING", font=("-weight bold", 20))
+            self.current_user_label = Label(self.root, text="Current User:", font=20)
+            self.out_of_label = Label(self.root, text="Calculated: 0 / " + str(len(self.users)), font=20)
+            self.estimated_label = Label(self.root, text="Estimated Time Remaining: ", font=20)
+            pad = 20
+            self.calculation_title_label.pack(side=TOP, padx=pad, pady=pad)
+            self.current_user_label.pack(side=TOP, padx=pad, pady=pad)
+            self.out_of_label.pack(side=TOP, padx=pad, pady=pad)
+            self.estimated_label.pack(side=TOP, padx=pad, pady=pad)
+            results_df, dict_of_users_dicts = self.run_basic_calculation()
+            results_df = self.run_advanced_calculation(results_df, dict_of_users_dicts)
+            write_files(self, results_df)
+            finish_calculation()
+            self.back_on_click()
 
     def add_users_from_file(self):
         Tk().withdraw()
         file_name = askopenfilename()
         with open(file_name) as f:
             users_from_file = f.readlines()
-        users_from_file = [x.strip() for x in users_from_file]
+        users_from_file = [x.strip() for x in users_from_file if x != '' and x != '\n']
         user_count = 1
         authrized_users = self.basic_measures.check_all_users(users_from_file)
         for user_name in users_from_file:
@@ -337,7 +366,10 @@ class GUI:
             else:
                 self.prob_users['not_active'].append(user_name)
         if self.prob_users['not_active']:
-            tkMessageBox.showinfo("Add user", "Failed users:\n" + str(self.prob_users['not_active']))
+            failed_users = ''
+            for failed_user in self.prob_users['not_active']:
+                failed_users += failed_user + '\n'
+            tkMessageBox.showinfo("Add user", "Failed users:\n" + failed_users)
         else:
             tkMessageBox.showinfo("Add user", "All users added successfully")
 

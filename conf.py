@@ -1,4 +1,3 @@
-
 EXCEL_FILE = 'results.xlsx'
 SUMMARY_FILE = 'summary.txt'
 RT3_THRESHOLD = 22.55
@@ -7,3 +6,7 @@ REORDER = [
     'discuss_rank', 'h_index', 'original_tweets', 'spread_rank', 'topical_signal', 'mention_impact',
     'social_networking_potential', 'popularity', 'interactor_ratio', 'signal_strength', 'tweet_count_score',
     'activity_score', 'general_activity', 'retweet_impact', 'retweet_mention_ratio', 'follower_rank']
+SYSTEM_TITLE = '\nInfluence Measures Calculation System\n'
+SYSTEM_DESCRIPTION = 'This system developed as a simple automatic tool\n for research purposes ' \
+                     'in order to \ncalculate users influence measures \nbased on the social network - TWITTER.\n'
+SYSTEM_CREATORS = 'Developed by: Ron Yehezkel & Shira Levy\nTutor: Prof. Mark Last'
