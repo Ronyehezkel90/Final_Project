@@ -320,7 +320,7 @@ class GUI:
 
     def ready_for_calculation(self):
         try:
-            excel_file = open(EXCEL_FILE, "r+")
+            open(EXCEL_FILE, "r+")
         except IOError:
             tkMessageBox.showinfo("Permission problem", "Please close excel '"+EXCEL_FILE+"' File")
             return False

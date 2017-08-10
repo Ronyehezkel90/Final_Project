@@ -30,7 +30,7 @@ def write_summary_to_file(model, results_df):
     f.write(flag + '   HashTags   ' + flag + '\n')
     f.write('HashTags: ' + str(model.hashtags) + '\n')
     for hashtag in model.hashtags:
-        f.write('\t' + hashtag + '\n')
+        f.write('\t' + hashtag.encode('utf-8') + '\n')
     f.write(flag + '   Users Detailed   ' + flag + '\n')
     f.write('Total users: ' + '\n')
     for user in all_users:
