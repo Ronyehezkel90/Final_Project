@@ -10,6 +10,7 @@ from tkFileDialog import askopenfilename
 from utils import get_current_time, handle_exception, sleep_15_min, remove_prob_users, get_default_date, get_dates, \
     write_files, finish_calculation
 from conf import EXCEL_FILE, SYSTEM_TITLE, SYSTEM_DESCRIPTION, SYSTEM_CREATORS
+import os
 
 
 class GUI:
@@ -320,8 +321,8 @@ class GUI:
 
     def ready_for_calculation(self):
         try:
-            open(EXCEL_FILE, "r+")
-        except IOError:
+            open(EXCEL_FILE, "w+")
+        except IOError as e:
             tkMessageBox.showinfo("Permission problem", "Please close excel '"+EXCEL_FILE+"' File")
             return False
         if not self.users:
