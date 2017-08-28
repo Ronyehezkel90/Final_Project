@@ -1,21 +1,21 @@
 ****************   Dates   ****************
-From Date: 2016-08-10 19:36:50.634000
-To Date: 2017-08-10 19:36:50.634000
+From Date: 2016-08-28 17:21:22.659000
+To Date: 2017-08-28 17:21:22.659000
 ****************   Users   ****************
-Total users: 1
-Calculated users: 1
+Total users: 2
+Calculated users: 2
 Non-Active users: 0
 Protected users: 0
 Unknown Problem users: 0
 ****************   HashTags   ****************
-HashTags: [u'\u05e6\u05d1\u05e8\u05d9\u05d5\u05e7\u05d9\u05d8\u05dc']
-	צבריוקיטל
-	צבריוקיטל
+HashTags: []
 ****************   Users Detailed   ****************
 Total users: 
-	StavShaffir
+	ishmuli
+	yaniv33martin
 Calculated Users:
-	StavShaffir
+	ishmuli
+	yaniv33martin
 Non-Active Users:
 Protected Users:
 Unknown Problem Users:

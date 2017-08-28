@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 import tweepy
 import datetime
-from conf import RT3_THRESHOLD
+from conf import RT3_THRESHOLD, RP2_THRESHOLD
 from dateutil.relativedelta import relativedelta
 
 base_address = 'https://twitter.com/{}/status/{}'
@@ -108,8 +108,11 @@ class BasicMeasures:
 
     def get_rp2(self, original_tweets):
         # RP2 = Number of OTs posted by the author and replied by other users.
-        # todo implementation
-        return 1
+        rp2 = 1
+        for tweet in original_tweets:
+            if tweet.favorite_count > RP2_THRESHOLD:
+                rp2 += 1
+        return rp2
 
     def get_retweets(self, tweets):
         return self.count_by_measure('retweets', tweets)
@@ -283,7 +286,8 @@ class BasicMeasures:
             all_users_measures_dict[user]['mention_impact'] = self.get_mention_impact(all_users_measures_dict[user])
 
     def get_all_basic_measures(self, user, hashtags, dates=None):
-        self.dates = dates if dates else {'from': datetime.datetime.now() - relativedelta(years=1), 'to': datetime.datetime.today()}
+        self.dates = dates if dates else {'from': datetime.datetime.now() - relativedelta(years=1),
+                                          'to': datetime.datetime.today()}
         basic_measures_dict = {}
         screen_name = user[0]['screen_name']
         tweets = self.get_tweets(screen_name)

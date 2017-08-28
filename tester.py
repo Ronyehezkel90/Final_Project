@@ -3,12 +3,8 @@ import datetime
 from basic_measures import BasicMeasures
 import unittest
 from activity_measures import ActivityMeasures
-import numpy as np
-import matplotlib.pyplot as plt
 from connector import Connector
 import pandas as pd
-from openpyxl import load_workbook
-import math
 
 from utils import get_current_time
 

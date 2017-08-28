@@ -1,5 +1,6 @@
 EXCEL_FILE = 'results.xlsx'
 SUMMARY_FILE = 'summary.txt'
+RP2_THRESHOLD = 5
 RT3_THRESHOLD = 22.55
 REORDER = [
     'USER', 'ot1', 'ot2', 'ot3', 'rp1', 'rp2', 'rt1', 'rt2', 'rt3', 'f1', 'f3', 'm1', 'm2', 'm3', 'm4', 'ft1', 'ft2',
