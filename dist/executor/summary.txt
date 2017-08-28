@@ -1,0 +1,21 @@
+****************   Dates   ****************
+From Date: 2017-05-29 00:00:00
+To Date: 2017-08-29 00:00:00
+****************   Users   ****************
+Total users: 2
+Calculated users: 2
+Non-Active users: 0
+Protected users: 0
+Unknown Problem users: 0
+****************   HashTags   ****************
+HashTags: []
+****************   Users Detailed   ****************
+Total users: 
+	zehavagalon
+	StavShaffir
+Calculated Users:
+	zehavagalon
+	StavShaffir
+Non-Active Users:
+Protected Users:
+Unknown Problem Users:
